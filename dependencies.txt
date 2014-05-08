@@ -1,0 +1,9 @@
+EasyBBS Fast-CGI Sample Requirements:
+
+Compile :
+Lazarus         : > 1.2.0 
+Synapse         : 4.0
+Brook Framework : > 3.0
+
+Run
+DB & Designs    : https://www.bergertime.eu/download/BBS_setup_de.zip
