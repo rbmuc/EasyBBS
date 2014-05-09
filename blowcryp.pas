@@ -3,6 +3,7 @@
 //   Datum     : 03.08.2013
 //   modified  : 01.03.2014
 //               23.04.2014 BF 2.6.4 -> BF 3.0.0
+//               08.05.2014 ip_ntoa & ip_aton change integer to int64
 
 unit BlowCryp;
 
@@ -63,8 +64,8 @@ type
   end;
 
 
-  function ip_ntoa(nip: integer):string;
-  function ip_aton(sip: string):integer;
+  function ip_ntoa(nip: int64):string;
+  function ip_aton(sip: string):int64; 
   procedure GetIPLatLon( CONST sURL_sip:String; VAR sLat, sLong:STRING );
   function sUpdate(const s1,s2,s3:String):String;
   function encrypt(inStrg: string): string;
@@ -137,9 +138,9 @@ begin
      iif := sFalse;
 end;
 
-function ip_ntoa(nip: integer):string;
+function ip_ntoa(nip: int64):string;
 var
-  o1,o2,o3,o4 : integer;
+  o1,o2,o3,o4 : int64;
 begin
   o1 := ( nip DIV 16777216 ) MOD 256;
   o2 := ( nip DIV 65536    ) MOD 256;
@@ -152,10 +153,10 @@ begin
 end;
 
 
-function ip_aton(sip: string):integer;
+function ip_aton(sip: string):int64;
 var
-  o1,o2,o3,o4 : integer;
-  integer_ip  : integer;
+  o1,o2,o3,o4 : int64;
+  integer_ip  : int64;
   Oktett      : TStringList;
 
 begin
@@ -186,7 +187,6 @@ begin
   Oktett.Free;
   ip_aton := integer_ip;
 end;
-
 
 function iTime():integer;
 var
@@ -395,7 +395,7 @@ var
 begin
   if inStrg ='' then exit;
   s1:=TStringStream.Create('');                          //  make sure destination stream is blank
-  bf:=TBlowfishEncryptStream.Create('Mona#1lisa', s1);   //  writes to destination stream
+  bf:=TBlowfishEncryptStream.Create('Bahn#1hof', s1);    //  writes to destination stream
   bf.writeAnsiString( inStrg );
   bf.free;
   result:= StrToHex ( s1.datastring ) ;
@@ -411,7 +411,7 @@ var
 begin
   if inStrg ='' then exit;
   s2:=TStringStream.Create( HexToStr(inStrg) );          // fill stream
-  bf:=TBlowfishDecryptStream.Create('Mona#1lisa', s2);   // create blowfish stream
+  bf:=TBlowfishDecryptStream.Create('Bahn#1hof', s2);    // create blowfish stream
   result:= bf.readAnsiString ;                           // copy stream contents to destination
   bf.free;
   s2.free;
